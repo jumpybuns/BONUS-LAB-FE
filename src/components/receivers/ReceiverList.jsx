@@ -1,15 +1,32 @@
 import React from 'react';
 import Receiver from './Receiver';
 import PropTypes from 'prop-types';
+import { useForm } from '../../hooks/Form';
 
 const ReceiverList = ({ receivers }) => {
   const receiverElements = receivers.map((receiver) => (
     <li key={receiver.id}>
-      <Receiver name={receiver.name} url={receiver.url} />
+      <Receiver
+        manufacturer={receiver.manufacturer}
+        model={receiver.model}
+        country={receiver.country}
+        year={receiver.year}
+      />
     </li>
   ));
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
+  const handleChange = () => {
+    useForm();
+  };
   return (
     <div>
+      <form onSubmit={handleSubmit}>
+        <input type="submit" value={form} onChange={handleChange} />
+      </form>
       <ul data-testid="receivers">{receiverElements}</ul>
     </div>
   );
