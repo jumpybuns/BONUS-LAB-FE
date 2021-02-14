@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { useForm } from '../../hooks/Form';
 
 const ReceiverList = ({ receivers }) => {
+  const form = useForm();
   const receiverElements = receivers.map((receiver) => (
     <li key={receiver.id}>
       <Receiver
