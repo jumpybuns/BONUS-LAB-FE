@@ -3,31 +3,34 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 import receiverAPIResponse from '../fixtures/receivers.json';
-import AllEpisodes from './AllEpisodes';
+import ReceiverPage from './ReceiverPage';
 import { MemoryRouter } from 'react-router-dom';
 
 const server = setupServer(
-  rest.get('https://rickandmortyapi.com/api/episode', (req, res, ctx) => {
-    return res(ctx.json(receiverAPIResponse));
-  })
+  rest.get(
+    'https://radiant-plains-82409.herokuapp.com/api/v1/receivers',
+    (req, res, ctx) => {
+      return res(ctx.json(receiverAPIResponse));
+    }
+  )
 );
 
-describe('All Episodes Container Test', () => {
+describe('All Receivers Container Test', () => {
   beforeAll(() => server.listen());
   afterAll(() => server.close());
 
-  it('renders All Episodes', async () => {
+  it('renders All Receivers', async () => {
     render(
       <MemoryRouter>
-        <AllEpisodes />
+        <ReceiverPage />
       </MemoryRouter>
     );
     screen.getAllByAltText('loading');
 
-    const listOfEpisodes = await screen.findByTestId('episodes');
+    const listOfReceivers = await screen.findByTestId('Receivers');
 
     return waitFor(() => {
-      expect(listOfEpisodes).not.toBeEmptyDOMElement();
+      expect(listOfReceivers).not.toBeEmptyDOMElement();
     });
   });
 });
